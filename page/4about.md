@@ -15,9 +15,9 @@ type: page
 
 ## 联系我
 
-* GitHub：
-* email：
-* [Weibo]
+* GitHub：1877551230 / lil-miracle
+* email：mj0312@vip.qq.com
+* [Weibo]我这个名字文艺吗
 
 
 ## 友情链接
