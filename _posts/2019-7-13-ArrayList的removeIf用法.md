@@ -2,12 +2,12 @@
 layout:     post
 title:      ArrayList的removeIf用法
 subtitle:   
-date:       2019-07-12
+date:       2019-07-13
 categories: Java
 author:     miracle
 catalog: true
 tags:
-    - api
+    - JavaAPI
 ---
 
 
