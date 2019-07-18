@@ -8,6 +8,7 @@ author:     miracle
 catalog: true
 tags:
     - JavaAPI
+    - Java多态
 ---
 
 
