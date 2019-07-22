@@ -18,8 +18,9 @@ tags:
  同步资源,同步锁  
  
 ## 修饰在方法上
- 当线程1调用method方法时,就会给method方法添加一个锁,如果方法不执行完毕,其他线程就不会只能此方法,线程排队等待
-
+### 例一
+当线程1调用method方法时,就会给该类所有synchronized修饰的方法添加一个锁,如果方法不执行完毕,其他线程就
+不会只能此方法,线程排队等待,此类有一个方法加锁,另一个不加锁,所以可以并行执行
 
 ```java
 /**
@@ -52,7 +53,27 @@ public class SynchronizedTest1 {
             e.printStackTrace();
         }
     }
+    public static void main(String[] args) {
+        SynchronizedTest1 test1 = new SynchronizedTest1();
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodA(); }
+        });
+        t1.start();
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodB();
+            }
+        });
+        t2.start();
+    }
+}
 ```
+
+### 例二
+ 下面的两个方法同步执行,因为synchronized影响范围不单单是方法本身,而是这个类中所有带synchronized修饰的方法
 
 ```java
 /**
@@ -91,7 +112,30 @@ public class SynchronizedTest1_1 {
             e.printStackTrace();
         }
     }
+    public static void main(String[] args) {
+        SynchronizedTest1_1 test1 = new SynchronizedTest1_1();
+        //SynchronizedTest1_1SynchronizedTest1_1 test2 = new SynchronizedTest1_1();
+
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodA();
+            }
+        });
+        t1.start();
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodB();
+            }
+        });
+        t2.start();
+    }
+}
 ```
+
+### 例三
+ 下面两个线程访问同一个对象,该对象的方法加锁,即锁住的是方法所属随想本身,所以同步执行
 
 ```java
 /**
@@ -113,10 +157,37 @@ public class SynchronizedTest1_2 {
             e.printStackTrace();
         }
     }
+    public static void main(String[] args) {
+        SynchronizedTest1_2 test1 = new SynchronizedTest1_2();
+
+
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodA();
+            }
+        });
+        t1.start();
+
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodA();
+            }
+        });
+        t2.start();
+    }
+}
 ```
  
 ## 修饰在对象上
- 当线程1执行同步代码块时,就会给对象添加一个锁,如果代码块不执行完毕,其他线程就不会执行此代码块,线程排队等待
+ 当线程1执行同步代码块时,就会给对象添加一个锁,如果代码块不执行完毕,其他线程就不会执行此代码块,线程排队等待  
+
+ 
+### 例一
+
+synchronized修饰代码块,两个线程,一个访问带synchronized修饰的代码块,另一个访问不带synchronized修饰的代码块,所以并行
+
 
 ```java
 /**
@@ -153,7 +224,29 @@ public class SynchronizedTest2 {
             e.printStackTrace();
         }
     }
+    public static void main(String[] args) {
+        SynchronizedTest2 test1 = new SynchronizedTest2();
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodA();
+            }
+        });
+        t1.start();
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodB();
+            }
+        });
+        t2.start();
+    }
+}
 ```
+
+### 例二
+
+两个代码块都带synchronized修饰,两个线程访问时,串行运行
 
 ```java
 /**
@@ -194,48 +287,29 @@ public class SynchronizedTest2_1 {
         }
 
     }
-```
-
-### 结论
-
-Java提供了同步机制互斥锁机制，这个机制保证了在同一时间内只有一个线程能访问共享资源（临界资源）。这个机制的保障来源于监视锁Monitor，在Java中，每个对象都自带监视锁，当我们要访问用synchronized修饰的方法或代码块的时候，都意味着进入这个方法或者代码块要加锁，离开要放锁。而且Synchronizd可以显示的说明对哪个对象加锁,如下例子：
-
-```java
-    public void methodA(){
-        //同步代码块
-        synchronized (this){
-            try{
-                for (int i = 0; i < 5; i++) {
-                    System.out.println("methodA-"+i);
-                    Thread.sleep(1000);
-                }
-
-            }catch (Exception e){
-                e.printStackTrace();
+     public static void main(String[] args) {
+        SynchronizedTest2_1 test1 = new SynchronizedTest2_1();
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodA();
             }
-        }
-
-    }
-```
-等价于
-
-```java
- public synchronized void methodA(){
-        try{
-            for (int i = 0; i < 5; i++) {
-                System.out.println("methodA-"+i);
-                Thread.sleep(1000);
+        });
+        t1.start();
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodB();
             }
-
-        }catch (Exception e){
-            e.printStackTrace();
-        }
+        });
+        t2.start();
     }
+}
 ```
- 
-## 修饰在类上
 
-当线程1执行同步代码块时,就会给类添加一个锁,如果代码块不执行完毕,其他线程就不会执行此代码块,线程排队等待
+### 例三
+
+下面类中两个方法等价,都是给对象添加锁,所以同步运行
 
 ```java
 /**
@@ -280,7 +354,29 @@ public class SynchronizedTest3 {
         }
 
     }
+     public static void main(String[] args) {
+        SynchronizedTest3 test1 = new SynchronizedTest3();
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodA();
+            }
+        });
+        t1.start();
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodB();
+            }
+        });
+        t2.start();
+    }
+}
 ```
+
+### 例四
+下面三个方法,前两个方法等同,相当于给对象加锁,第三个方法C未加锁  
+AB两个方法同步,与C方法异步
 
 ```java
 /**
@@ -341,8 +437,38 @@ public class SynchronizedTest3_1 {
         }
 
     }
+    public static void main(String[] args) {
+        SynchronizedTest3_1 test1 = new SynchronizedTest3_1();
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodA();
+            }
+        });
+        t1.start();
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodB();
+            }
+        });
+        t2.start();
+
+        Thread t3 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodC();
+            }
+        });
+        t3.start();
+    }
+}
 
 ```
+
+### 例五
+本类中,方法A锁的是本类的对象,this指代本类,给this对象加锁,BC两个方法给都是obj对象加锁,所以BC两个同步,A与BC异步
+
 
 ```java
 /**
@@ -404,7 +530,44 @@ public class SynchronizedTest3_2 {
         }
 
     }
+    public static void main(String[] args) {
+        SynchronizedTest3_2 test1 = new SynchronizedTest3_2();
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodA();
+            }
+        });
+        t1.start();
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodB();
+            }
+        });
+        t2.start();
+
+        Thread t3 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodC();
+            }
+        });
+        t3.start();
+    }
+}
 ```
+
+
+ 
+## 修饰在类上
+
+当线程1执行同步代码块时,就会给类添加一个锁,如果代码块不执行完毕,其他线程就不会执行此代码块,线程排队等待
+
+
+### 例一
+static静态方法属于类,第二个方法的代码块synchronized修饰的也是此类,所以同步
+
 
 ```java
 /**
@@ -449,12 +612,34 @@ public class SynchronizedTest4 {
         }
 
     }
+    public static void main(String[] args) {
+        SynchronizedTest4 test1 = new SynchronizedTest4();
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodA();
+            }
+        });
+        t1.start();
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodB();
+            }
+        });
+        t2.start();
+    }
+}
 ```
+
+### 例二
+方法A是修饰对象的锁,方法B是修饰此类的锁,互不影响,所以并行
+
 
 ```java
 /**
  * synchronized的对象锁和static synchronized的类锁,
- * 是两个不用的锁,所以是异步,并行运行
+ * 是两个不同的锁,所以是异步,并行运行
  *
  */
 public class SynchronizedTest5 {
@@ -492,7 +677,63 @@ public class SynchronizedTest5 {
         }
 
     }
+    public static void main(String[] args) {
+        SynchronizedTest5 test1 = new SynchronizedTest5();
+        Thread t1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodA();
+            }
+        });
+        t1.start();
+        Thread t2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                test1.methodB();
+            }
+        });
+        t2.start();
+    }
+}
 ```
 
 ## 博客参考
 [一个不错的参考](https://blog.csdn.net/luoweifu/article/details/46613015)
+
+## 总结
+
+1. synchronized方法执行的时候,synchronized方法影响的不是方法本身,而是这个类中所有带synchronized的方法,synchronized线程都会等待其执行完成.  如果一个synchronized方法调用另一个synchronized方法,则会造成死锁.
+2. 如果两个方法请求的资源互不相干,尽量使用synchronized修饰代码段的方式,如下方式
+
+```java
+    public void methodA(){
+        //同步代码块
+        synchronized (this){
+            try{
+                for (int i = 0; i < 5; i++) {
+                    System.out.println("methodA-"+i);
+                    Thread.sleep(1000);
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        }
+
+    }
+```
+等价于
+
+```java
+ public synchronized void methodA(){
+        try{
+            for (int i = 0; i < 5; i++) {
+                System.out.println("methodA-"+i);
+                Thread.sleep(1000);
+            }
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+```
