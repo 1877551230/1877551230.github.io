@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      2019-07-31-多线程(wait,notifyAll,synchronized)之生产者与消费者问题
+title:      多线程(wait,notifyAll,synchronized)之生产者与消费者问题
 subtitle:   
 date:       2019-07-31
 categories: Java
