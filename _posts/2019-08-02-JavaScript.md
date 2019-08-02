@@ -3,7 +3,7 @@ layout:     post
 title:      JavaScript
 subtitle:   
 date:       2019-08-02
-categories: Javaweb
+categories: JavaScript
 author:     miracle
 catalog: true
 tags:
