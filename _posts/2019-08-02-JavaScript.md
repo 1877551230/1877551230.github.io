@@ -136,11 +136,11 @@ js属于松散类型的程序语言(弱类型)
 ### 数据类型的转换函数
 toString() 将所有数据类型转换为String类型  
 parseInt() 强制转换成整数,如果不转换,则返回NaN(not a number)  
-  parseInt("5.5"); //结果5  
+parseInt("5.5"); //结果5  
 parseFloat() 强制转换成浮点数,不能转换返回NaN  
-  parseFloat("5.5");//结果5.5  
+parseFloat("5.5");//结果5.5  
 typeof() 查询当前的数据类型  
-  typeof("test"+10);//返回String  
+typeof("test"+10);//返回String  
 isNaN()  是否不是一个数字  
 
 ### 特殊的数据类型
@@ -556,11 +556,12 @@ js的神奇之处:
 	       对象名.方法名();
 
 
----
 
-创建js的自定义对象:
-1.直接创建对象
+
+## 创建js的自定义对象:
+1. 直接创建对象
   比如:
+```js
    function testObject(){
 	var personObj=new Object();
 	
@@ -578,9 +579,11 @@ js的神奇之处:
 	alert(personObj.name+"   "+personObj.age);
 
    }
-
-2.使用构造函数创建对象
+```
+2. 使用构造函数创建对象
   比如:
+  
+```js
     function Person(n,a,ad){
 		//定义name和age属性
 		this.name=n;
@@ -610,58 +613,64 @@ js的神奇之处:
 		p.showInfo();
 		p.showAddress();
 	}
-  
-使用json创建对象
-  json(javaScript Object Notation) 是一个轻量级的数据交换格式
+```  
+
+
+## 使用json创建对象
+  json(javaScript Object Notation) 是一个轻量级的数据交换格式  
   json的说明:
-    用{}代表对象
-	用[]代表数组
-    使用名/值的方式定义,名和值之间用 : 间隔
-	名称需要使用""引起来
-	多对定义之间使用 , 间隔了多少个月
-	字符串的属性值用 "" 引起来
+- 用{}代表对象
+- 用[]代表数组
+- 使用名/值的方式定义,名和值之间用 : 间隔
+- 名称需要使用""引起来
+- 多对定义之间使用 , 间隔了多少个月
+- 字符串的属性值用 "" 引起来  
   比如:
   
+```js
      var jsonObj={"name":"张三","age":30,"address":"北京"};
 	 alert(jsonObj.name);
 	 alert(jsonObj.age);
 	 alert(jsonObj.address);
-    
-js中的事件处理:
-事件:指页面元素状态改变,用户在操作鼠标或键盘时触发的动作
+```    
+## js中的事件处理:
+事件:指页面元素状态改变,用户在操作鼠标或键盘时触发的动作  
   
-  触发的动作:
-    鼠标事件: onclick  单击
-	          ondblclick   双击
-			  onmousedown   鼠标左键按下
-			  onmouseup     鼠标左键抬起
-			  onmouseover   鼠标划过(进入)
-			  onmouseout    鼠标移出
-			  onmousemove   鼠标在范围内移动
+触发的动作:
   
-    键盘事件: onkeydown     键盘按下
-	          onkeypress    键盘按下/按住
-			  onkeyup       键盘抬起
+鼠标事件:
+* onclick  单击
+* ondblclick   双击
+* onmousedown   鼠标左键按下
+* onmouseup     鼠标左键抬起
+* onmouseover   鼠标划过(进入)
+* onmouseout    鼠标移出
+* onmousemove   鼠标在范围内移动  
   
-    状态改变事件:
-	          onblur        焦点失去
-			  onfocus       焦点获取
-			  onsubmit      表单提交      
-              onchange      内容改变
-              onselect      文本被选定
-			  onload        窗体完成加载
-			  onunload      用户退出页面
+键盘事件: 
+* onkeydown     键盘按下
+* onkeypress    键盘按下/按住
+* onkeyup       键盘抬起  
   
-所有的事件原理都设计模式中的"监听者设计模式"; 
+状态改变事件:
+* onblur        焦点失去
+* onfocus       焦点获取
+* onsubmit      表单提交      
+* onchange      内容改变
+* onselect      文本被选定
+* onload        窗体完成加载
+* onunload      用户退出页面
+  
+所有的事件原理都设计模式中的"监听者设计模式";  
   
 event对象:是js的内置对象  
-  任何事件触发后将会产生一个event对象
-  event对象记录事件发生时的鼠标位置,键盘按键状态
-       和触发对象等信息
+  任何事件触发后将会产生一个event对象  
+  event对象记录事件发生时的鼠标位置,键盘按键状态和触发对象等信息  
 	   
-  获取event对象和使用event对象获得相关信息,单击的位置
-  触发的对象
-  
+  获取event对象和使用event对象获得相关信息,单击的位置  
+  触发的对象  
+
+```js
 			function ff(e){
 				alert(e.clientX+":"+e.clientY);
 				//e.srcElement,ie浏览器
@@ -670,9 +679,10 @@ event对象:是js的内置对象
 				alert(obj.nodeName);
 			}
 			<div onclick="ff(event)">event对象测试</div>
-
+```
 事件的冒泡机制:
 
+```js
 function cancelBubble(e){
 	alert("input button");
 	//取消冒泡:
@@ -684,8 +694,9 @@ function cancelBubble(e){
 		e.cancelBubble=true;
 	}
 }
-
-
+```
+## json
+```js
 {"name":"张三","age":30,"address":"北京","students":[{"name":"name1","age":20},{"name":"name2","age":20},{"name":"name3","age":20}]}
 
 {
@@ -740,27 +751,29 @@ function cancelBubble(e){
         "userPassword": "tq"
     }
 ]
-json:
-  http://www.json.org
-  http://www.json.org.cn
-  http://www.runoob.com/   菜鸟教程
-  
-1.了解熟悉json数据格式
-   a.用键值对表达数据
-   b.{键值对,键值对,键值对...}  json对象
-   c.[{}...,[]...]  json数组
-   d.json数据中可以包含 json数据,json数组,数字,字符串,布尔
-   e.json对象和json数组可以做合理的嵌套
 
-2.java对象和json数据的相互转换:
-  借助第三方工具来实现相互转换
-  阿里巴巴    fastjson
-  国外        json-lib
-  具体的参见testfastjson项目
-            testjsonlib项目
+```
+json:
+  http://www.json.org  
+  http://www.json.org.cn  
+  http://www.runoob.com/   菜鸟教程  
   
-3.javascript中的json对象和json字符串相互转换
-   即,如何用js操作json数据
+1. 了解熟悉json数据格式
+   a.用键值对表达数据  
+   b.{键值对,键值对,键值对...}  json对象  
+   c.[{}...,[]...]  json数组  
+   d.json数据中可以包含 json数据,json数组,数字,字符串,布尔  
+   e.json对象和json数组可以做合理的嵌套  
+
+2. java对象和json数据的相互转换:
+  借助第三方工具来实现相互转换  
+  阿里巴巴    fastjson  
+  国外        json-lib  
+  具体的参见testfastjson项目  testjsonlib项目  
+  
+3. javascript中的json对象和json字符串相互转换
+   即,如何用js操作json数据  
+```html
 <html>
 	<head>
 		<title>用js操作json数据</title>
@@ -863,7 +876,11 @@ json:
 
 	</body>
 </html> 
-  
+```
+
+---
+
+## jQuery  
 
 jquery:是一个优秀javascript框架,一个轻量级的js库
        兼容css3,及各种浏览器
