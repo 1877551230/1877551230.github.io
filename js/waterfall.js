@@ -63,6 +63,14 @@
       core_tech: 'html',
       description: 'html标签最基础的用法'
     }
+	, {
+      demo_link: 'http://1877551230.github.io/dom_Demo',
+      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
+      code_link: 'https://github.com/1877551230/dom_Demo2',
+      title: 'dom编程基础',
+      core_tech: 'JavaScript',
+      description: 'dom编程最基础的写法'
+    }
   ];
 
   contentInit(demoContent) //内容初始化
