@@ -70,6 +70,13 @@
       title: 'dom编程基础',
       core_tech: 'JavaScript',
       description: 'dom编程最基础的写法'
+    },{
+      demo_link: 'http://1877551230.github.io/jQuery_basic',
+      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
+      code_link: 'https://github.com/1877551230/jQuery_basic',
+      title: 'jQuery的基本使用方法',
+      core_tech: 'JavaScript,jQuery',
+      description: 'jQuery基础的写法'
     }
   ];
 

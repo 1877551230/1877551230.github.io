@@ -17,8 +17,8 @@ tags:
 **方法**  :
 
 1. 建立仓库管理代码
-2. 在git上建立gh-pages分支,可以用git push origin master:gh-pages
+2. 在git上建立gh-pages分支,可以用git push origin master:gh-pages,会自动在远程建立这个分支
 3. 输入1877551230.github.io/项目路径  就可以打开了
-4. 必须在根目录要有index.html这个主页面
+4. 必须在**根**目录要有**index.html**这个主页面
 
 这样就大功告成了
