@@ -77,6 +77,27 @@
       title: 'jQuery的基本使用方法',
       core_tech: 'JavaScript,jQuery',
       description: 'jQuery基础的写法'
+    },{
+      demo_link: 'http://1877551230.github.io/jquery_array',
+      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
+      code_link: 'https://github.com/1877551230/jquery_array',
+      title: 'jQuery的array数组',
+      core_tech: 'JavaScript,jQuery',
+      description: 'jQuery的array基础的写法'
+    },{
+      demo_link: 'http://1877551230.github.io/jquery_effect',
+      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
+      code_link: 'https://github.com/1877551230/jquery_effect',
+      title: 'jQuery的动画效果',
+      core_tech: 'JavaScript,jQuery',
+      description: 'jQuery基础的动画效果'
+    },{
+      demo_link: 'http://1877551230.github.io/jquery_event',
+      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
+      code_link: 'https://github.com/1877551230/jquery_event',
+      title: 'jQuery的事件基础写法',
+      core_tech: 'JavaScript,jQuery',
+      description: 'jQuery基础的事件的写法'
     }
   ];
 
