@@ -14,6 +14,13 @@
      */
   var demoContent = [
     {
+      demo_link: 'http://1877551230.github.io/aimbooster',
+      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
+      code_link: 'https://github.com/1877551230/aimbooster',
+      title: 'aimbooster',
+      core_tech: 'JavaScript,jQuery',
+      description: '练习反应速度和鼠标速度的小游戏'
+    },{
       demo_link: 'http://1877551230.github.io/html_basic',
       img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
       code_link: 'https://github.com/1877551230/html_basic',
@@ -104,13 +111,6 @@
       title: 'jQuery的dom编程基础写法',
       core_tech: 'JavaScript,jQuery',
       description: 'jQuery基础的dom编程的写法'
-    },{
-      demo_link: 'http://1877551230.github.io/aimbooster',
-      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
-      code_link: 'https://github.com/1877551230/aimbooster',
-      title: 'aimbooster',
-      core_tech: 'JavaScript,jQuery',
-      description: '练习反应速度和鼠标速度的小游戏'
     }
   ];
 
