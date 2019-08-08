@@ -14,66 +14,65 @@
      */
   var demoContent = [
     {
-      demo_link: 'https://1877551230.github.io/css_Demo/',
+      demo_link: 'http://1877551230.github.io/html_basic',
       img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
-      code_link: 'https://github.com/1877551230/css_Demo',
-      title: 'css的基础用法',
-      core_tech: 'css',
-      description: '一些最基础的css用法'
-    }, {
-      demo_link: 'http://1877551230.github.io/event_Demo/',
-      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
-      code_link: 'https://github.com/1877551230/event_Demo',
-      title: 'js中event的基本用法',
-      core_tech: 'JavaScript',
-      description: ''
-    }, {
-      demo_link: 'http://1877551230.github.io/JavaScript_Demo/',
-      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
-      code_link: 'https://github.com/1877551230/JavaScript_Demo',
-      title: 'JavaScript基础用法',
-      core_tech: 'JavaScript',
-      description: '最基础的JavaScript的使用方法'
-    }, {
-      demo_link: 'http://1877551230.github.io/htmlLayout-_Demo/',
-      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
-      code_link: 'https://github.com/1877551230/htmlLayout-_Demo',
-      title: 'html层居中的基础案例',
+      code_link: 'https://github.com/1877551230/html_basic',
+      title: 'html标签的基本用法',
       core_tech: 'html',
-      description: 'html层居中的基础用法'
-    }, {
-      demo_link: 'http://1877551230.github.io/json_Demo/',
-      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
-      code_link: 'https://github.com/1877551230/json_Demo',
-      title: 'JavaScript中json的基础用法',
-      core_tech: 'JavaScript',
-      description: 'json的基础使用方法'
-    }, {
+      description: 'html标签最基础的用法'
+    },{
       demo_link: 'http://1877551230.github.io/html_Demo2',
       img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
       code_link: 'https://github.com/1877551230/html_Demo2',
       title: '不同窗口大小换背景',
       core_tech: 'JavaScript',
       description: '根据窗口大小的不同,自动换背景图片'
-    }, {
-      demo_link: 'http://1877551230.github.io/html_Demo',
+    },{
+      demo_link: 'http://1877551230.github.io/htmlLayout-_Demo/',
       img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
-      code_link: 'https://github.com/1877551230/html_Demo2',
-      title: 'html标签的基本用法',
+      code_link: 'https://github.com/1877551230/htmlLayout-_Demo',
+      title: 'html层居中的基础案例',
       core_tech: 'html',
-      description: 'html标签最基础的用法'
-    }
-	, {
-      demo_link: 'http://1877551230.github.io/dom_Demo',
+      description: 'html层居中的基础用法'
+    },{
+      demo_link: 'https://1877551230.github.io/css_basic/',
       img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
-      code_link: 'https://github.com/1877551230/dom_Demo2',
+      code_link: 'https://github.com/1877551230/css_basic',
+      title: 'css的基础用法',
+      core_tech: 'css',
+      description: '一些最基础的css用法'
+    },{
+      demo_link: 'http://1877551230.github.io/JavaScript_basic/',
+      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
+      code_link: 'https://github.com/1877551230/JavaScript_basic',
+      title: 'JavaScript基础用法',
+      core_tech: 'JavaScript',
+      description: '最基础的JavaScript的使用方法'
+    },{
+      demo_link: 'http://1877551230.github.io/JavaScript_event/',
+      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
+      code_link: 'https://github.com/1877551230/JavaScript_event',
+      title: 'js中event的基本用法',
+      core_tech: 'JavaScript',
+      description: 'js中事件的基础写法'
+    },{
+      demo_link: 'http://1877551230.github.io/json_Demo/',
+      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
+      code_link: 'https://github.com/1877551230/json_Demo',
+      title: 'JavaScript中json的基础用法',
+      core_tech: 'JavaScript',
+      description: 'js创建对象的三种方法,其中包含json对象'
+    },{
+      demo_link: 'http://1877551230.github.io/JavaScript_dom',
+      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
+      code_link: 'https://github.com/1877551230/JavaScript_dom',
       title: 'dom编程基础',
       core_tech: 'JavaScript',
-      description: 'dom编程最基础的写法'
+      description: '原生js的dom编程最基础的写法'
     },{
-      demo_link: 'http://1877551230.github.io/jQuery_basic',
+      demo_link: 'http://1877551230.github.io/jquery_selector',
       img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
-      code_link: 'https://github.com/1877551230/jQuery_basic',
+      code_link: 'https://github.com/1877551230/jquery_selector',
       title: 'jQuery的基本使用方法',
       core_tech: 'JavaScript,jQuery',
       description: 'jQuery基础的写法'
@@ -98,6 +97,20 @@
       title: 'jQuery的事件基础写法',
       core_tech: 'JavaScript,jQuery',
       description: 'jQuery基础的事件的写法'
+    },{
+      demo_link: 'http://1877551230.github.io/jquery_dom',
+      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
+      code_link: 'https://github.com/1877551230/jquery_dom',
+      title: 'jQuery的dom编程基础写法',
+      core_tech: 'JavaScript,jQuery',
+      description: 'jQuery基础的dom编程的写法'
+    },{
+      demo_link: 'http://1877551230.github.io/aimbooster',
+      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
+      code_link: 'https://github.com/1877551230/aimbooster',
+      title: 'aimbooster',
+      core_tech: 'JavaScript,jQuery',
+      description: '练习反应速度和鼠标速度的小游戏'
     }
   ];
 
