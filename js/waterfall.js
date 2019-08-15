@@ -111,6 +111,20 @@
       title: 'jQuery的dom编程基础写法',
       core_tech: 'JavaScript,jQuery',
       description: 'jQuery基础的dom编程的写法'
+    },{
+      demo_link: 'http://1877551230.github.io/shoppingclaculation',
+      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
+      code_link: 'https://github.com/1877551230/shoppingclaculation',
+      title: '购物车结算',
+      core_tech: 'JavaScript,HTML',
+      description: '原生js写购物车结算'
+    },{
+      demo_link: 'http://1877551230.github.io/city_and_privence',
+      img_link: 'https://github.com/1877551230/1877551230.github.io/blob/master/img/secret.png?raw=true',
+      code_link: 'https://github.com/1877551230/city_and_privence',
+      title: '省市联级',
+      core_tech: 'JavaScript,HTML',
+      description: '原生js写的省市选择器基础demo'
     }
   ];
 
