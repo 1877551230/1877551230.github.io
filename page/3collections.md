@@ -35,6 +35,7 @@ type: page
     Docker小白零基础入门
 
 ## Java
+* [架构](https://blog.csdn.net/lycyingO/article/details/99518559)
 
 * [内存溢出](http://outofmemory.cn/#csdn)
 
