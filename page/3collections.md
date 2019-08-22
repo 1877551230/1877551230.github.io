@@ -35,6 +35,12 @@ type: page
     Docker小白零基础入门
 
 ## Java
+* [题目总结](https://blog.csdn.net/qq_35275233/article/details/87887029)
+
+* [一个牛逼的面试技巧github](https://github.com/Snailclimb/JavaGuide)
+
+* [2019面试总结大全](https://github.com/0voice/interview_internal_reference)
+
 * [架构](https://blog.csdn.net/lycyingO/article/details/99518559)
 
 * [内存溢出](http://outofmemory.cn/#csdn)
