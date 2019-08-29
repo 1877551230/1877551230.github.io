@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      spring jdbc
+title:      spring 事务管理
 subtitle:   
 date:       2019-08-27
 categories: Java
@@ -33,8 +33,13 @@ druid功能最为全面，sql拦截等功能，统计数据较为全面，具有
 
 ## spring 声明式事务管理
 ### 方式一:xml
-jdbcTemplate是一个jdbc模板,是由spring提供的,这个模板使用了阿里巴巴的连接池  
-在UserDaoImpl中我们使用这个模板来调用方法
+* jdbcTemplate是一个jdbc模板,是由spring提供的,这个模板使用了阿里巴巴的连接池druid  
+在UserDaoImpl中我们使用这个模板来调用方法  比如update方法(增删改)和query方法(查)
+* bean id=dataSource 代表连接  
+* bean id=txManager 代表新功能(org.springframespring...中写好的)
+* tx:advice id="txAdvice transaction-manager="txManager 指明哪些方法需要加事务管理,txManager是新功能
+* tx:method name="add* 对所有add开头的方法生效
+*  <aop:config><aop:advisor advice-ref="txAdvice" pointcut-ref="ServiceOperation></aop:config> 声明参数是txAdvice,先扫描该切点所有方法,然后对比切点类中方法名称,上面txAdvice是参数,例是以add开头的,就生效
 
 
 ```xml
@@ -130,7 +135,6 @@ jdbcTemplate是一个jdbc模板,是由spring提供的,这个模板使用了阿�
         <aop:advisor advice-ref="txAdvice" pointcut-ref="ServiceOperation"/>
     </aop:config>
 
-
     <!-- 同样的, 也不要忘了PlatformTransactionManager 就是切面,新功能业务-->
     <!-- 有事物的开启,事物的提交,事物的回滚 -->
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -142,9 +146,9 @@ UserDaoImpl.java数据库方法和UserServiceImpl.java业务方法和下面注�
 
 
 ### 方式二:annotation版 
-添加了@Transactional注解的,被添加了事务,在业务类上面添加事务  
-只有增删改修改了数据库的需要添加事务,查找不修改数据库的数据,所以不用添加事务  
-增删改都是用jdbcTemplate.update()方法,查找用不同的方法比如jdbcTemplate.query等,看下面例子
+* 添加了@Transactional注解的,被添加了事务,在业务类上面添加事务  
+* 只有增删改修改了数据库的需要添加事务,查找不修改数据库的数据,所以不用添加事务  
+* 相对于xml版,少了tx:method,aop:config等配置
 
 ```xml
   <!-- 加载属性文件进入spring容器 -->
@@ -214,10 +218,10 @@ UserDaoImpl.java数据库方法和UserServiceImpl.java业务方法和下面注�
 	<!-- spring声明式事物开始 -->
 	
 
-   <tx:annotation-driven transaction-manager="txManager"/><!-- 仍然需要一个PlatformTransactionManager -->
+   <tx:annotation-driven transaction-manager="txManager"/><!-- 仍然需要一个TransactionManager -->
 
 
-    <!-- 同样的, 也不要忘了PlatformTransactionManager 就是切面,新功能业务-->
+    <!-- 同样的, 也不要忘了TransactionManager 就是切面,新功能业务-->
     <!-- 有事物的开启,事物的提交,事物的回滚 -->
     <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="alibabaDataSource"/>
