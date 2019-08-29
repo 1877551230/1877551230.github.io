@@ -85,16 +85,12 @@ web.xml
 * org.springframework.web.servlet.DispatcherServlet拦截*.do请求和其他程序员写的请求
 * 进入DispatcherServlet的service方法
  - 根据请求url去HandlerMapping中寻找是否有指定Controller,HandlerMapping维护的map集合是从springmvc容器取出的
- - 通过HandlerAdapter(处理器适配去)调用和执行Controller中方法,Controller对象是从springmvc容器中取出
+ - 通过HandlerAdapter(处理器适配器)调用和执行Controller中方法,Controller对象是从springmvc容器中取出
  - 调用Controller方法,返回ModelAndView
  - 从ModelAndView取出消息对象,目标页面的字符串,拼装出url,并渲染目标页面,利用request.getRequestDispatcher("目标url").forward(request,response);
 * 把渲染完的页面响应给浏览器,然后浏览器格式化显示输出
 
 ## 表单方式得到数据
-
-return相当于转发,可以通过requestScope.key获得value  
-有如下一个表单,表单的action是user/login1.do,方法是post
-
 login.jsp
 
 ```html
@@ -125,10 +121,26 @@ login.jsp
 如下是一个controller,上面介绍了,给controller写了RequestMapping注解,从中得到方法  
 @RequestMapping("user/")注解添加在类前面,给整个类拼接一个路径头/user
 给方法增加注解@RequestMapping(value="login1.do",method=RequestMethod.POST),value是方法名,method是区分post方法还是get方法  
-当login.jsp提交表单时,表单action为/user/*.do方法,就调用controller中对应的方法  
+当login.jsp提交表单时,表单action为/user/*.do方法,springmvc的dispatcherservlet进行拦截,根据请求url去HandlerMapping中寻找是否有指定Controller,HandlerMapping维护的map集合是从springmvc容器取出的,通过HandlerAdapter(处理器适配去)调用和执行Controller中方法,Controller对象是从springmvc容器中取出  
+调用Controller方法,返回ModelAndView,就调用controller中对应的方法  
+
+### InternalResourceViewResolver内部资源视图解析器
+引入这个bean,prefix代表前缀,suffix代表后缀,通过返回的viewName,组装成一个完成的url
+
+```xml
+<!-- 内部资源视图解析器,用于springmvc专门用来拼装目标url地址的
+		prefix:前缀/WEB-INF/pages/
+		suffix:后缀.jsp
+		拼装成目标url地址,拼装的原则:前缀+viewName+后缀->/WEB-INF/pages/success.jsp
+	 -->
+	<bean id="jspViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="prefix" value="/WEB-INF/pages/"/>
+    <property name="suffix" value=".jsp"/> 	
+    </bean>
+```
+
 
 下面controller写了4种从表单中获取数据的方式,也写了4种响应到服务器上的方式,可以两两随意组合  
-在springmvc.xml中有jspViewResolver jsp视图解析器的类(导入的),可以自动拼装路径,成功后会跳转到相应的界面,spring_mvc.xml中有注解  
 
 UserController.java
 
