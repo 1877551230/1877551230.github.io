@@ -82,7 +82,7 @@ web.xml
 * spring_mvc.xml有load-on-startup,所以在服务器加载时也加载了并把其中的类实例化对象放在springmvc容器中管理,反射带有Controller的类,解析该类中的@RequestMapping注解,把路径和路径所对应的方法信息存储到springmvc容器中(map集合)
 * tomcat服务器启动完毕
 *  发送请求给服务器
-* org.springframework.web.servlet.DispatcherServlet拦截*.do请求和其他程序员写的请求
+* DispatcherServlet拦截*.do请求和其他程序员写的请求
 * 进入DispatcherServlet的service方法
  - 根据请求url去HandlerMapping中寻找是否有指定Controller,HandlerMapping维护的map集合是从springmvc容器取出的
  - 通过HandlerAdapter(处理器适配器)调用和执行Controller中方法,Controller对象是从springmvc容器中取出
@@ -118,11 +118,11 @@ login.jsp
  	</form>
  </div>
 ```
-如下是一个controller,上面介绍了,给controller写了RequestMapping注解,从中得到方法  
-@RequestMapping("user/")注解添加在类前面,给整个类拼接一个路径头/user
-给方法增加注解@RequestMapping(value="login1.do",method=RequestMethod.POST),value是方法名,method是区分post方法还是get方法  
-当login.jsp提交表单时,表单action为/user/*.do方法,springmvc的dispatcherservlet进行拦截,根据请求url去HandlerMapping中寻找是否有指定Controller,HandlerMapping维护的map集合是从springmvc容器取出的,通过HandlerAdapter(处理器适配去)调用和执行Controller中方法,Controller对象是从springmvc容器中取出  
-调用Controller方法,返回ModelAndView,就调用controller中对应的方法  
+* 如下是一个controller,上面介绍了,给controller写了RequestMapping注解,从中得到方法  
+* @RequestMapping("user/")注解添加在类前面,给整个类拼接一个路径头/user
+* 给方法增加注解@RequestMapping(value="login1.do",method=RequestMethod.POST),value是方法名,method是区分post方法还是get方法  
+* 当login.jsp提交表单时,表单action为/user/*.do方法,springmvc的dispatcherservlet进行拦截,根据请求url去HandlerMapping中寻找是否有指定Controller,HandlerMapping维护的map集合是从springmvc容器取出的,通过HandlerAdapter(处理器适配去)调用和执行Controller中方法,Controller对象是从springmvc容器中取出  
+* 调用Controller方法,返回ModelAndView,就调用controller中对应的方法  
 
 ### InternalResourceViewResolver内部资源视图解析器
 引入这个bean,prefix代表前缀,suffix代表后缀,通过返回的viewName,组装成一个完成的url
@@ -670,7 +670,8 @@ public class UploadController_Form {
 		</dependency>
 ```
 
-springmvc的底层上传框架还是commons-fileupload组件,但是上传的api方法就不是commons-fileupload组件的api,此commons-fileupload组件api又经过springmvc框架的封装,上传的api就变成org.springframework.web.multipart.commons.CommonsMultipartResolver的api方法  
+springmvc的底层上传框架还是commons-fileupload组件,但是上传的api方法就不是commons-fileupload组件的api,此commons-fileupload组件api又经过springmvc框架的封装,上传的api就变成
+commons.CommonsMultipartResolver的api方法  
 **注意:**
 springmvc不是只对Commons-fileupload做封装  
 springmvc还可以对Cos的上传文件的组件进行封装所有,需要添加第三的jar包(commons-fileupload,cos)  
