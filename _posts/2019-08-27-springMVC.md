@@ -120,7 +120,10 @@ login.jsp
 ```
 * 如下是一个controller,上面介绍了,给controller写了RequestMapping注解,从中得到方法  
 * @RequestMapping("user/")注解添加在类前面,给整个类拼接一个路径头/user
-* 给方法增加注解@RequestMapping(value="login1.do",method=RequestMethod.POST),value是方法名,method是区分post方法还是get方法  
+* 给方法增加注解
+ @RequestMapping  
+ (value="login1.do",method=RequestMethod.POST),  
+ value是方法名,method是区分post方法还是get方法  
 * 当login.jsp提交表单时,表单action为/user/*.do方法,springmvc的dispatcherservlet进行拦截,根据请求url去HandlerMapping中寻找是否有指定Controller,HandlerMapping维护的map集合是从springmvc容器取出的,通过HandlerAdapter(处理器适配去)调用和执行Controller中方法,Controller对象是从springmvc容器中取出  
 * 调用Controller方法,返回ModelAndView,就调用controller中对应的方法  
 
