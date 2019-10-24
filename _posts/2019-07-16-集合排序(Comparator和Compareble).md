@@ -52,7 +52,7 @@ public interface Comparable<T> {
 }
 ```
 
-若x.compareTo(y) <0，则x<y;若x.compareTo(y) =0，则x=y;若x.compareTo(y) >0，则x=y;
+* 若x.compareTo(y) <0，则x<y;若x.compareTo(y) =0，则x=y;若x.compareTo(y) >0，则x=y;
 
 ```java
 public void sortString(){
@@ -121,8 +121,8 @@ Collections.sort(Student),Student重写compareTo方法
 
 ## Comparator
 
-Comparator需要实现compare方法,用匿名内部类方式实现此方法,此方法是Comparator接口的方法  
-compare若compare(x,y) <0，则x<y;若compare(x,y) =0，则x=y;若compare(x,y)>0，则x=y;
+* Comparator需要实现compare方法,用匿名内部类方式实现此方法,此方法是Comparator接口的方法  
+* compare若compare(x,y) <0，则x<y;若compare(x,y) =0，则x=y;若compare(x,y)>0，则x=y;
 
 ```java
 //此方法是为了获取一个List集合
