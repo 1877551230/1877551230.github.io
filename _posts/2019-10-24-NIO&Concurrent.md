@@ -598,3 +598,147 @@ class Runner implements Runnable{
 	}
 }
 ```
+
+3. exchanger:交换机 用于交换两个线程之间的信息
+
+```java
+public class ExchangerDemo {
+	public static void main(String[] args) {
+		Exchanger<String> ex=new Exchanger<>();
+		new Thread(new Producer(ex)).start();
+		new Thread(new Consumer(ex)).start();
+	}
+}
+//生产者
+class Producer implements Runnable{
+	private Exchanger<String> ex;
+	 
+	public Producer(Exchanger<String> ex) {
+		super();
+		this.ex = ex;
+	}
+
+	@Override
+	public void run() {
+		String info="商品";
+		//生产者需要将商品交换给消费者
+		//同时,生产者应该收到消费者换过来的前钱
+		//利用交换机来交换数据
+		try {
+			String msg=ex.exchange(info);
+			System.out.println("生产者收到了消费者换过来的:"+msg);
+			
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+}
+//消费者
+class Consumer implements Runnable{
+	private Exchanger<String> ex;
+	public Consumer(Exchanger<String> ex) {
+		super();
+		this.ex = ex;
+	}
+
+	@Override
+	public void run() {
+		String info="钱";
+		//消费者需要将钱交还给生产者
+		//同时,消费者应该收到生产者换过来的商品
+		try {
+			String msg=ex.exchange(info);
+			System.out.println("消费者收到生产者交换来的"+msg);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}
+```
+
+4. Semaphore:信号量 用于进行计数阻塞.当有限的资源被全部占用的时候,后续的线程就需要阻塞,知道有资源被释放,则后续的线程可以去抢占执行.信号量在实际开发中的作用适用于进行限流
+
+```java
+public class SemaphoreDemo {
+	public static void main(String[] args) {
+		//表示有五张桌子
+		Semaphore s=new Semaphore(5);
+		for(int i=0;i<8;i++){
+			new Thread(new Eater(s)).start();
+		}
+	}
+}
+class Eater implements Runnable{
+	Semaphore s;
+	
+	public Eater(Semaphore s) {
+		super();
+		this.s = s;
+	}
+
+	@Override
+	public void run() {
+		
+		try {
+			//表示获取一个信号
+			//如果信号减为0,则后续的线程就会被阻塞
+			s.acquire();
+			//当桌子被占用的时候,意味着可以使用的资源减少,对外暴露的信号减少一个
+			System.out.println("过来一个人就餐,占用一张桌子");
+			Thread.sleep((long) (Math.random()*10000));
+			//当有桌子被空出的时候,就意味着对外暴露的信号多了一个
+			//释放被占用信号
+			s.release();
+			System.out.println("一个人吃完了,空出一个桌子");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}
+```
+
+
+## Atomic操作
+
+1. 是对对象进行封装,然后对外提供线程安全的操作而不用再显式的声明锁
+
+```java
+public class AtomicDemo {
+	//static int i=0;
+	//对外提供了很多线程安全的方法来操作该值
+	//AtomicInteger在底层会对操作进行加锁
+	//Jdk1.8开始,AtomicInteger采用Cas保证线程安全
+	static AtomicInteger ai=new AtomicInteger(0);
+	//原子性引用类型AtomicReference<V>
+	public static void main(String[] args) throws InterruptedException {
+		CountDownLatch cd1=new CountDownLatch(3);
+		new Thread(new Add(cd1)).start();
+		new Thread(new Add(cd1)).start();
+		new Thread(new Add(cd1)).start();
+		cd1.await();
+		System.out.println(ai);
+	}
+}
+class Add implements Runnable{
+CountDownLatch cd1;
+
+	public Add(CountDownLatch cd1) {
+	super();
+	this.cd1 = cd1;
+}
+
+	@Override
+	public void run() {
+		for(int i=0;i<10000;i++){
+			//AtomicDemo.i++;
+			AtomicDemo.ai.incrementAndGet();//++i
+			
+		}
+		cd1.countDown();
+	}
+}
+```
