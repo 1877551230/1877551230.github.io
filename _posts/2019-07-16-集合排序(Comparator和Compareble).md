@@ -1,13 +1,13 @@
 ---
 layout:     post
-title:      集合排序(Comparator和Compareble)
+title:      Comparator和Compareble
 subtitle:   
 date:       2019-07-16
-categories: Java
+categories: 面试题
 author:     miracle
 catalog: true
 tags:
-    - JavaAPI
+    - 面试题
 ---
 
 ## Collection和Collections的区别
@@ -110,7 +110,7 @@ Collections.sort(Student),Student重写compareTo方法
 @Override
 	public int compareTo(Student o) {
 		//给name排序
-		int value = this.getName().compareTo(o.getName());//
+		int value = this.getName().compareTo(o.getName());
 		//给年龄排
 		//int value = this.getAge()-o.getAge();
 		//给stuNo排序

@@ -3,7 +3,7 @@ layout:     post
 title:      StringBuffer和StringBuilder
 subtitle:   
 date:       2019-10-31
-categories: Java
+categories: 面试题
 author:     miracle
 catalog: true
 tags:

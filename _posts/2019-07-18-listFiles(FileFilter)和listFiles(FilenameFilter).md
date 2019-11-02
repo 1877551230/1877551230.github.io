@@ -1,9 +1,9 @@
 ---
 layout:     post
-title:      listFiles(FileFilter)和listFiles(FilenameFilter)
+title:     FileFilter和FilenameFilter
 subtitle:   
 date:       2019-07-18
-categories: Java
+categories: 面试题
 author:     miracle
 catalog: true
 tags:
