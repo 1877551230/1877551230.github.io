@@ -1,44 +1,104 @@
 ---
 layout:     post
-title:      Comparator和Compareble
+title:     FileFilter和comparable
 subtitle:   
-date:       2019-07-16
+date:       2019-07-18
 categories: 面试题
 author:     miracle
 catalog: true
 tags:
-    - 面试题
+    - JavaAPI
+    - Java多态
 ---
 
-## Collection和Collections的区别
+* content
+{:toc}
 
- **Collection接口**:是List和Set的父接口,接口中规范了List和Set集合的操作方式  
- **Collections类**:在类中有很多方法,这些方法都是用来操作集合的,可以看成是集合的工具类,且很多方法是静态方法
+## listFiles(FileFilter)
 
-## 集合的排序:
+```java
+public void testMethod14() {
+		File file = new File("D:/aa");
+		if (file.exists()) {
+			File[] fs = file.listFiles(new FileFilter(){
+				//回调函数
+				@Override
+				public boolean accept(File pathname) {
+					
+					return pathname.getName().endsWith(".txt");//过滤的条件
+				}
+			});
+			for (File f : fs) {
+				System.out.println(f);
+			}
+		} else {
+			System.out.println("目录不存在");
+		}
+	}
+```
+过滤后的文件以数组存进fs里,该方法参数是FileFilter接口的子类,子类重写了接口accept方法,listFiles方法中调用了FileFilter的accept方法,参数用匿名内部类的方式重写accept方法,参数表示该目录下的文件对象
+```java
+ public File[] listFiles(FileFilter filter) {
+        String ss[] = list();
+        if (ss == null) return null;
+        ArrayList<File> files = new ArrayList<>();
+        for (String s : ss) {
+            File f = new File(s, this);
+            if ((filter == null) || filter.accept(f))
+                files.add(f);
+        }
+        return files.toArray(new File[files.size()]);
+    }
+```
+这是回调函数,多态的典型
 
-### List集合排序
+## listFiles(FilenameFilter)
 
-1. Collections.sort(List);  
- sort方法的参数是一个List集合,对List集合中的数据排序  
- 如果List集合中的元素每个元素内部只有一个数据,就直接比较即可,前提要保证元素中的数据类型必须重写compareTo方法  
- 如果List集合中的元素中的每个元素内部有很多其他数据,就需要把元素的类型实现Comparable接口,并重写compareTO方法,在此方法中指定排序的原则
-2. Collections.sort(List,Comparator);
- sort方法的参数有两个,一个是要排序的list数据,另一个参数是比较器接口Comparator,在此比较器中指定要排序的原则,使用比较器的方式就不用对要比较的集合中的元素类型实现Comparable接口
- 可以实现多个比较器,每个比较器对应一种排序原则
+```java
+	public void testMethod15() {
+		File file = new File("D:/aa");
+		if (file.exists()) {
+			File[] fs = file.listFiles(new FilenameFilter(){
 
-### 总结  
- 如果有一种排序原则,用Comparable接口
- 如果有多种比较原则,就用Comparator接口
+				@Override
+				public boolean accept(File dir, String name) {
+					
+					return name.endsWith("txt");
+				}});
+			for (File f : fs) {
+				System.out.println(f);
+			}
+		} else {
+			System.out.println("目录不存在");
+		}
+	}
+
+}
+```
+
+过滤后的文件以数组存进fs里,该方法参数是FilenameFilter接口的子类,子类重写了接口accept方法,listFiles方法中调用了FileFilter的accept方法,参数用匿名内部类的方式重写accept方法,accept有两个参数,第一个参数表示路径,第二个参数表示文件名
+看源码
+
+```java
+ public File[] listFiles(FilenameFilter filter) {
+        String ss[] = list();
+        if (ss == null) return null;
+        ArrayList<File> files = new ArrayList<>();
+        for (String s : ss)
+            if ((filter == null) || filter.accept(this, s))
+                files.add(new File(s, this));
+        return files.toArray(new File[files.size()]);
+    }
+```
+
+这是多态,回调函数的典型
 
 
-| 参数 | Comparable | Comparator |
-| :------ |:--- | :--- |
-| 排序逻辑 | 排序逻辑必须在待排序对象的类中，故称之为自然排序 | 排序逻辑在另一个实现 |
-| 实现 | 实现Comparable接口 | 实现Comparator接口 |
-| 排序方法 | int compareTo(Object o1) | int compare(Object o1,Object o2) |
-| 触发排序 | Collections.sort(List) | Collections.sort(List, Comparator) |
-| 接口所在包 | java.lang.Comparable | java.util.Comparator |
+
+
+
+
+
 
 ## Comparable
 
@@ -169,7 +229,17 @@ Collections.sort(Student),Student重写compareTo方法
 		}
 ```
 
+## 总结  
+ 如果有一种排序原则,用Comparable接口
+ 如果有多种比较原则,就用Comparator接口
 
 
+| 参数 | Comparable | Comparator |
+| :------ |:--- | :--- |
+| 排序逻辑 | 排序逻辑必须在待排序对象的类中，故称之为自然排序 | 排序逻辑在另一个实现 |
+| 实现 | 实现Comparable接口 | 实现Comparator接口 |
+| 排序方法 | int compareTo(Object o1) | int compare(Object o1,Object o2) |
+| 触发排序 | Collections.sort(List) | Collections.sort(List, Comparator) |
+| 接口所在包 | java.lang.Comparable | java.util.Comparator |
 
 
