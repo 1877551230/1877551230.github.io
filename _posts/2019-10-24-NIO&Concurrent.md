@@ -3,11 +3,11 @@ layout:     post
 title:      NIO&Concurrent
 subtitle:   
 date:       2019-10-24
-categories: Java
+categories: 大数据
 author:     miracle
 catalog: true
 tags:
-    - 大数据
+    - 并发
 ---
 
 * content

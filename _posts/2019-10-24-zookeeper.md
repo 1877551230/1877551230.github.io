@@ -3,11 +3,11 @@ layout:     post
 title:      zookeeper
 subtitle:   
 date:       2019-10-25
-categories: Java
+categories: 大数据
 author:     miracle
 catalog: true
 tags:
-    - 大数据
+    - zookeeper
 ---
 
 * content
