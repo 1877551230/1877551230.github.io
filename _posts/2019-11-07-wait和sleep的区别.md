@@ -204,3 +204,7 @@ public class TestNotifyWait {
 wait被唤醒了  
 
 如果没有唤醒方法,第一个线程会一致处于等待的状态,第二个线程唤醒了之后就不用等待了
+
+## 等待机制与synchronized
+
+notify/notifyAll和wait方法，在使用这3个方法时，必须处于synchronized代码块或者synchronized方法中，否则就会抛出IllegalMonitorStateException异常，这是因为调用这几个方法前必须拿到当前对象的监视器monitor对象，也就是说notify/notifyAll和wait方法依赖于monitor对象，在前面的分析中，我们知道monitor 存在于对象头的Mark Word 中(存储monitor引用指针)，而synchronized关键字可以获取 monitor ，这也就是为什么notify/notifyAll和wait方法必须在synchronized代码块或者synchronized方法调用的原因。

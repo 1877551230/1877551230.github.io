@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      synchronized关键字
+title:      多线程api和synchronized关键字
 subtitle:   
 date:       2019-11-05
 categories: 面试题
@@ -12,6 +12,82 @@ tags:
 
 * content
 {:toc}
+
+## 线程的声明周期
+
+新建(new),就绪(runnable),运行(running),阻塞(blocked),死亡(terminated)
+
+### 休眠sleep
+会使线程从running状态转变到runnable状态或是blocked状态  
+
+Thread.sleep(100);//毫秒  
+TimeUnit.SECOND.sleep(1);//单位秒,还有其他单位  
+会抛出InterruptedException
+
+### 中断interrupt
+
+这种方式会使线程从blocked状态转换到其他状态,比如runnable,running,terminated状态
+
+比如  
+TimeUnit.SECONDS.sleep(2);
+//休眠两秒就被中断  
+Thread.interrupt();  
+如果线程企图休眠1分钟,休眠两秒就被打断,就会报错
+
+1. 中断线程相关的方法
+在线程内部有一个中断flag,如果我们执行了interrupt方法,name这个标签会被设置为true.表示此线程被打上了中断标记,与线程中断的api还有两个  
+ * boolean interrupted 测试当前线程是否已经中断,重置flag,清楚当前中断状态
+ * boolean isInterrupted 测试当前线程是否已经中断
+interrupt是唯一能将中断状态设置为true的方法,静态方法interrupted会将当前线程的中断状态清除.
+
+2. 如何中断一个线程
+
+```java
+	public static void main(String[] args) {
+		Thread thread=new Thread(()->{
+			while(true){}
+		});
+		thread.start();
+		//中断这个线程
+		thread.interrupt();
+	}
+```
+
+会发现中断不起作用,因为中断线程,但是线程里面没有对其进行回应.
+
+```java
+	public static void main(String[] args) {
+		Thread thread=new Thread(()->{
+			while(true){
+				if(Thread.currentThread().isInterrupted()){
+					return;
+				}
+			}
+		});
+		thread.start();
+		//中断这个线程
+		thread.interrupt();
+	}
+```
+
+内部线程积极响应了外面的中断信号,就能够中断了.
+
+### yied方法
+
+这个方法会使线程从running状态转换到runnable状态  
+意思是告诉调度器,愿意放弃当前的cpu资源
+
+### 设置线程优先级
+
+优先级高表示线程优先调用.不是绝对的.优先级从1-10,数字越大优先级越大
+
+thread.setPriority(1);
+
+### join方法
+
+可以使其他线程从running状态转换到blocked状态.
+t.join方法只会使主线程进入等待池并等待线程t线程执行完毕后才会被唤醒,并不影响同一时刻处在运行状态的其他线程.
+
 
 
 ## 简介
@@ -59,6 +135,21 @@ public class Test1 implements Runnable{
 	}
 ```
 结果就是正确的
+
+## java对象头和Monitor
+
+在jvm中,对象在内存中分为三块区域:对象头,实例数据和对齐填充
+
+* 实例对象:存放类的属性数据信息，包括父类的属性信息，如果是数组的实例部分还包括数组的长度，这部分内存按4字节对齐。
+* 填充数据:由于虚拟机要求对象起始地址必须是8字节的整数倍。填充数据不是必须存在的，仅仅是为了字节对齐，这点了解即可。
+* java头对象:它是实现synchronized的锁对象的基础，一般而言，synchronized使用的锁对象是存储在Java对象头里的，jvm中采用2个字来存储对象头(如果对象是数组则会分配3个字，多出来的1个字记录的是数组长度)，其主要结构是由Mark Word 和 Class Metadata Address 组成
+Mark Word:存储对象的hashcode,锁信息或分代年龄或GC标志灯信息  
+Class Metadata Address:类型指针指向对象的类元数据,jvm通过这个指针确定该对象是哪个类的实例  
+synchronized的对象锁，锁标识位为10，其中指针指向的是monitor对象（也称为管程或监视器锁）的起始地址。每个对象都存在着一个 monitor 与之关联，对象与其 monitor 之间的关系有存在多种实现方式，如monitor可以与对象一起创建销毁或当线程试图获取对象锁时自动生成，但当一个 monitor 被某个线程持有后，它便处于锁定状态。在Java虚拟机(HotSpot)中，monitor是由ObjectMonitor实现的  
+ObjectMonitor中有两个队列，WaitSet 和 EntryList，用来保存ObjectWaiter对象列表( 每个等待锁的线程都会被封装成ObjectWaiter对象)，owner指向持有ObjectMonitor对象的线程，当多个线程同时访问一段同步代码时，首先会进入 EntryList 集合，当线程获取到对象的monitor 后进入 Owner 区域并把monitor中的owner变量设置为当前线程同时monitor中的计数器count加1，若线程调用 wait() 方法，将释放当前持有的monitor，owner变量恢复为null，count自减1，同时该线程进入 WaitSe t集合中等待被唤醒。若当前线程执行完毕也将释放monitor(锁)并复位变量的值，以便其他线程进入获取monitor(锁)。  
+  
+
+从字节码中可知同步语句块的实现使用的是monitorenter 和 monitorexit 指令，其中monitorenter指令指向同步代码块的开始位置，monitorexit指令则指明同步代码块的结束位置，当执行monitorenter指令时，当前线程将试图获取 objectref(即对象锁) 所对应的 monitor 的持有权，当 objectref 的 monitor 的进入计数器为 0，那线程可以成功取得 monitor，并将计数器值设置为 1，取锁成功。如果当前线程已经拥有 objectref 的 monitor 的持有权，那它可以重入这个 monitor (关于重入性稍后会分析)，重入时计数器的值也会加 1。倘若其他线程已经拥有 objectref 的 monitor 的所有权，那当前线程将被阻塞，直到正在执行线程执行完毕，即monitorexit指令被执行，执行线程将释放 monitor(锁)并设置计数器值为0 ，其他线程将有机会持有 monitor 。
 
 ## 对象锁
 1. 同步代码块锁
@@ -265,11 +356,6 @@ synchronized关键字,会对同步代码先写到工作内存,等synchronized修
 每个锁只能有一个对象处理
 3. 无法知道是否成功取到锁
 
-## join方法
-
-Thread.join方法是在等上一个线程执行完毕后,下一个线程才能开始.
-
-
 ## java怎么避免死锁
 
 1. 加锁顺序
@@ -279,3 +365,4 @@ Thread.join方法是在等上一个线程执行完毕后,下一个线程才能�
 3. 死锁检测
 死锁检测是一个更好的死锁预防机制,它主要是针对那些不可能实现按序加锁并且锁超时也不可行的场景.每当一个线程获得了锁,会在线程和锁相关的数据结构中(map,graph等)将其记下.除此之外,每当有线程请求锁失败时,这个线程可以遍历锁的关系图看看是否有死锁的发生.那么当检测出死锁时,这些线程该做什么?  
 一个可行的做法是释放所有的锁,回退,并且等待一段随机的时间后重试.更好的方案是给这些线程设置优先级,让一个或几个线程回退,剩下的线程就像没发生死锁一样继续保持他们需要的锁.如果赋予这些线程的优先级是固定不可变的,同一批线程总是会拥有更高的优先级.为避免这个问题,可以在死锁发生的时候设置随机的优先级.
+
