@@ -72,7 +72,7 @@ interrupt是唯一能将中断状态设置为true的方法,静态方法interrupt
 
 内部线程积极响应了外面的中断信号,就能够中断了.
 
-### yied方法
+### yield方法
 
 这个方法会使线程从running状态转换到runnable状态  
 意思是告诉调度器,愿意放弃当前的cpu资源
@@ -88,7 +88,9 @@ thread.setPriority(1);
 可以使其他线程从running状态转换到blocked状态.
 t.join方法只会使主线程进入等待池并等待线程t线程执行完毕后才会被唤醒,并不影响同一时刻处在运行状态的其他线程.
 
+### run方法
 
+run（）方法当作普通方法的方式调用。程序还是要顺序执行，要等待run方法体执行完毕后，才可继续执行下面的代码； 程序中只有主线程——这一个线程， 其程序执行路径还是只有一条， 这样就没有达到写线程的目的。  
 
 ## 简介
 
@@ -138,14 +140,14 @@ public class Test1 implements Runnable{
 
 ## java对象头和Monitor
 
-在jvm中,对象在内存中分为三块区域:对象头,实例数据和对齐填充
+在jvm中,对象在内存中分为三块区域:对象头,实例变量和对齐填充
 
-* 实例对象:存放类的属性数据信息，包括父类的属性信息，如果是数组的实例部分还包括数组的长度，这部分内存按4字节对齐。
+* 实例变量:存放类的属性数据信息，包括父类的属性信息，如果是数组的实例部分还包括数组的长度，这部分内存按4字节对齐。
 * 填充数据:由于虚拟机要求对象起始地址必须是8字节的整数倍。填充数据不是必须存在的，仅仅是为了字节对齐，这点了解即可。
 * java头对象:它是实现synchronized的锁对象的基础，一般而言，synchronized使用的锁对象是存储在Java对象头里的，jvm中采用2个字来存储对象头(如果对象是数组则会分配3个字，多出来的1个字记录的是数组长度)，其主要结构是由Mark Word 和 Class Metadata Address 组成
-Mark Word:存储对象的hashcode,锁信息或分代年龄或GC标志灯信息  
-Class Metadata Address:类型指针指向对象的类元数据,jvm通过这个指针确定该对象是哪个类的实例  
-synchronized的对象锁，锁标识位为10，其中指针指向的是monitor对象（也称为管程或监视器锁）的起始地址。每个对象都存在着一个 monitor 与之关联，对象与其 monitor 之间的关系有存在多种实现方式，如monitor可以与对象一起创建销毁或当线程试图获取对象锁时自动生成，但当一个 monitor 被某个线程持有后，它便处于锁定状态。在Java虚拟机(HotSpot)中，monitor是由ObjectMonitor实现的  
+* Mark Word:存储对象的hashcode,锁信息或分代年龄或GC标志等信息  
+* Class Metadata Address:类型指针指向对象的类元数据,jvm通过这个指针确定该对象是哪个类的实例synchronized的对象锁  
+对象锁(重量级锁):锁标识位为10，其中指针指向的是monitor对象（也称为管程或监视器锁）的起始地址。每个对象都存在着一个 monitor 与之关联，对象与其 monitor 之间的关系有存在多种实现方式，如monitor可以与对象一起创建销毁或当线程试图获取对象锁时自动生成，但当一个 monitor 被某个线程持有后，它便处于锁定状态。在Java虚拟机(HotSpot)中，monitor是由ObjectMonitor实现的  
 ObjectMonitor中有两个队列，WaitSet 和 EntryList，用来保存ObjectWaiter对象列表( 每个等待锁的线程都会被封装成ObjectWaiter对象)，owner指向持有ObjectMonitor对象的线程，当多个线程同时访问一段同步代码时，首先会进入 EntryList 集合，当线程获取到对象的monitor 后进入 Owner 区域并把monitor中的owner变量设置为当前线程同时monitor中的计数器count加1，若线程调用 wait() 方法，将释放当前持有的monitor，owner变量恢复为null，count自减1，同时该线程进入 WaitSe t集合中等待被唤醒。若当前线程执行完毕也将释放monitor(锁)并复位变量的值，以便其他线程进入获取monitor(锁)。  
   
 

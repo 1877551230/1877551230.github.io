@@ -35,6 +35,14 @@ type: page
     Docker小白零基础入门
 
 ## Java
+
+* [Mybatis常见面试题总结](https://blog.csdn.net/a745233700/article/details/80977133)
+
+* [SpringMVC常见面试题总结（超详细回答）](https://blog.csdn.net/a745233700/article/details/80963758)
+
+* [Spring常见面试题总结（超详细回答）](https://blog.csdn.net/a745233700/article/details/80959716)
+
+
 * [题目总结](https://blog.csdn.net/qq_35275233/article/details/87887029)
 
 * [一个牛逼的面试技巧github](https://github.com/Snailclimb/JavaGuide)
