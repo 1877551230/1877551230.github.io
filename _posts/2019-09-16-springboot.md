@@ -66,7 +66,7 @@ public class StarterOrder {
 
 ```java
 @Configuration
-//@Bean注解生成一个初始化方法,返回一个bean对 象 
+//@Bean注解生成一个初始化方法,返回一个bean对象 
 @Bean
 return new HelloComponent(); public HelloComponent initH(){
 public class HelloConfig {

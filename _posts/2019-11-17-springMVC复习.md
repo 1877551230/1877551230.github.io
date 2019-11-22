@@ -102,7 +102,6 @@ response.sendRedirect("login.jsp");
     <filter-name>CharacterEncodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
 </filter-mapping>
-
 ```
 
 2. get请求中文参数出现乱码解决方法有两个：
