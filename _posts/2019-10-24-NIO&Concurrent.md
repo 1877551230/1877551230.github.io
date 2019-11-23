@@ -3,7 +3,7 @@ layout:     post
 title:      NIO&Concurrent
 subtitle:   
 date:       2019-10-24
-categories: 大数据
+categories: 线程
 author:     miracle
 catalog: true
 tags:

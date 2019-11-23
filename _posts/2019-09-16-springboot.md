@@ -54,8 +54,33 @@ public class StarterOrder {
 ```
 4. controller和server 注入
 
-## springboot的自动配置原理
 
+
+## 应用入口类
+
+@SpringBootApplication:是springboot的核心注解,他是一个组合注解,该注解组合了:@Configuration,@EnableAutoConfiguration,@ComponentScan;可以用三个注解替代.  
+* @EnableAutoConfiguration让spring boot根据类路径中的jar包依赖为当前项目进行自动配置,例如,添加了spring-boot-start-web依赖,会自动添加tomcat和springmvc的依赖,那么springboot会对tomcat和springmvc进行自动配置.
+* springboot还会自动扫描@SpringBootApplication所在类的同级包以及下级包里的bean,所以入口类建议配置在groupid.artifactid下.
+
+### springboot配置文件
+
+springboot使用一个全局配置文件Application.properties或者application.yml,放在src/main/resource下.  
+
+## springboot热部署
+
+当任何类发生改变,就会通过jvm类加载的方式,加载最新的类到虚拟机中,就不需要重启.  
+
+在pom.xml中添加一个依赖
+
+```xml
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	spring-boot-devtools
+	<optional>true</optional>
+</dependency>
+```
+
+## springboot的自动配置原理
 1. 早期的xml
 大量的bean标签 
 2. jdk5出现了注解
@@ -94,7 +119,7 @@ public class HelloConfig {
 6. springboot的整合自动配置
  @EnableAutoConfiguration 根据依赖的jar包spring-boot-autoconfigure.jar，**autoconfigure.jar提供的配置文件spring.factories 记录了当前扩展jar包中提供的所有实现过得不同技术 的配置类的加载配置类全路径名称
 
-##RestTemplate
+## RestTemplate
 springmvc的对象,支持REST风格,支持http协议的代发访问(http协议封 装成了对象调用的方法 )  
 getForObject(url,Class) get请求  
 postForObject post请求  
